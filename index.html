@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RBKC Chess Community</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="container navwrap">
+    <div class="brand">
+      <img src="images/logo.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover">
+      <div><b>RBKC Chess</b><span>Community · Est. 2024</span></div>
+    </div>
+    <div class="tabs" id="tabs">
+      <div class="tab active" data-view="home">Home</div>
+      <div class="tab" data-view="events">Events</div>
+      <div class="tab" data-view="gallery">Gallery</div>
+    </div>
+    
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="view active" id="home">
+  <section class="hero">
+    <img class="bg" src="images/hero.jpg" alt="RBKC Chess Community at Earls Court Community Hub">
+    <div class="scrim"></div>
+    <div class="container hero-inner">
+      <span class="badge">Est. 2024 · RBKC</span>
+      <h1>Chess for<em>Everyone</em>in Kensington & Chelsea</h1>
+      <p>Join London's most inclusive chess community. Attend club sessions at Earls Court Community Hub and be part of a growing movement across RBKC.</p>
+      <div class="btnrow">
+        <span class="btn btn-gold" onclick="showView('events')">View Events →</span>
+        <span class="btn btn-outline-light">Join the Community</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats"><div class="container grid" style="grid-template-columns:repeat(2,1fr);max-width:420px;margin:0 auto">
+    <div><div class="num">500+</div><div class="lbl">Matches Played</div></div>
+    <div><div class="num">50+</div><div class="lbl">Events This Year</div></div>
+  </div></section>
+
+  <section class="section"><div class="container about-grid">
+    <div>
+      <span class="eyebrow">About Us</span>
+      <h2>Chess Without Boundaries</h2>
+      <p>RBKC Chess Community isn't an officially consolidated chess club — it's a constellation of people and their will to play chess, established in 2024. Our mission is to promote chess education and create inclusive spaces where people of all ages and skill levels can enjoy the game.</p>
+      <p>From complete beginners to experienced players, everyone is welcome at the board.</p>
+      <div class="founder">
+        <img src="images/founder.jpg" style="width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(28,47,74,.15)">
+        <div><b>Leonel Mbaho</b><span>Chess Coach & Founder</span></div>
+      </div>
+    </div>
+    <div class="imggrid">
+      <img src="images/hub-signage.jpg" style="border-radius:12px;height:170px;width:100%;object-fit:cover;box-shadow:0 6px 18px rgba(0,0,0,.1)">
+      <img src="images/casual-game.jpg" style="border-radius:12px;height:170px;width:100%;object-fit:cover;box-shadow:0 6px 18px rgba(0,0,0,.1);margin-top:26px">
+    </div>
+  </div></section>
+
+  <section class="venues"><div class="container">
+    <div style="text-align:center;margin-bottom:36px">
+      <span class="eyebrow">Our Venue</span>
+      <h2>Where We Play</h2>
+      <p class="lead" style="margin:0 auto">Our current home, plus the venues where we've run successful sessions before.</p>
+    </div>
+
+    <div class="vfeatured">
+      <div class="img"><img src="images/hub-featured.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="body">
+        <span class="currentpill">Current Venue</span>
+        <h3>Earls Court Community Hub</h3>
+        <p style="color:var(--muted);font-size:14px">Our home base for regular sessions, workshops and tournaments.</p>
+        <div class="meta">
+          <div>📍 1A Aisgill Ave, London W14 9NF</div>
+          <div>🗓 Free weekly game night every Tuesday, 6:00 PM – 8:00 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pasthead">Also: 1-2-1 sessions via booking at Brompton Library, and a past venue where we ran sessions before:</div>
+    <div class="vgrid">
+      <div class="vcard" style="opacity:1"><div class="img"><img src="images/brompton-venue.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"></div><div class="name">Brompton Library <span class="pastbadge" style="background:var(--gold);color:#2b2409">1-2-1 sessions</span></div></div><div class="body">Old Brompton Road, SW5 0DQ · 1-2-1 sessions via booking · First lesson free · Book via Officialfriendforlondon@proton.me or Telegram OFF4London</div></div>
+      <div class="vcard"><div class="img"><img src="images/chelsea-venue.jpg" style="width:100%;height:100%;object-fit:cover;filter:grayscale(35%)"><div class="ov"></div><div class="name">Chelsea Library <span class="pastbadge">Past venue</span></div></div><div class="body">363 Kings Road, SW3 5ES · Chess Club ran Thursdays 5:30–6:30pm, all ages welcome</div></div>
+    </div>
+  </div></section>
+
+  <section class="cta">
+    <div class="crown">♚</div>
+    <h2 style="color:#fff">Ready to Play?</h2>
+    <p>Join the RBKC Chess Community today. Attend sessions at Earls Court Community Hub and be part of London's most welcoming chess family.</p>
+    <div class="btnrow">
+      <span class="btn btn-gold" onclick="showView('events')">View Events →</span>
+      <span class="btn btn-outline-light" onclick="showView('gallery')">See the Gallery</span>
+    </div>
+  </section>
+</div>
+
+<!-- EVENTS -->
+<div class="view" id="events">
+  <section class="hero" style="min-height:280px"><div class="scrim" style="background:linear-gradient(135deg,#233c5e,#2f4569)"></div>
+    <div class="container hero-inner" style="max-width:100%;text-align:center;padding:60px 0">
+      <span class="badge">Calendar</span>
+      <h1 style="font-size:34px">Upcoming Events</h1>
+      <p style="margin:0 auto">Free weekly game night at Earls Court Community Hub, plus 1-2-1 sessions at Brompton Library.</p>
+    </div>
+  </section>
+  <div class="container section">
+    <h2 style="font-size:22px;margin-bottom:18px">Every Week</h2>
+    <div class="egrid" style="grid-template-columns:repeat(2,1fr);max-width:820px">
+      <div class="ecard"><div class="top"><span class="pill">Earls Court Community Hub</span><span class="pill pill-free">Free</span></div><h3>Weekly Game Night</h3><div class="desc">Open to all ages — drop in, play casual games, meet the community.</div><div class="meta"><div>📅 Every Tuesday, 6:00 PM – 8:00 PM</div><div>📍 1A Aisgill Ave, London W14 9NF</div></div></div>
+      <div class="ecard"><div class="top"><span class="pill">Brompton Library</span><span class="pill pill-gold">First lesson free</span></div><h3>1-2-1 Chess Sessions</h3><div class="desc">Booked one-to-one coaching sessions, individually scheduled.</div><div class="meta"><div>📅 Every Tuesday, 5:00 PM – 6:30 PM · via booking</div><div>📍 Old Brompton Road, SW5 0DQ</div><div>✉ Officialfriendforlondon@proton.me</div><div>💬 Telegram: OFF4London</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="view" id="gallery">
+  <section class="hero" style="min-height:260px"><div class="scrim" style="background:linear-gradient(135deg,#233c5e,#2f4569)"></div>
+    <div class="container hero-inner" style="max-width:100%;text-align:center;padding:55px 0">
+      <span class="badge">Gallery</span>
+      <h1 style="font-size:34px">Community in Action</h1>
+      <p style="margin:0 auto">Moments from our chess sessions — our current venue and past venues where we ran successful operations.</p>
+    </div>
+  </section>
+  <div class="container section">
+    <div class="filters">
+      <span class="fbtn active" data-venue="All">All</span><span class="fbtn" data-venue="Earls Court Community Hub">Earls Court Community Hub</span><span class="fbtn" data-venue="Chelsea Library (past)">Chelsea Library (past)</span><span class="fbtn" data-venue="Brompton Library (past)">Brompton Library (past)</span>
+    </div>
+    <div class="ggrid">
+      <div class="gph" data-venue="Earls Court Community Hub"><img src="images/gallery1.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"><span>Weekly game night</span></div><div class="feat">Featured</div></div>
+      <div class="gph" data-venue="Earls Court Community Hub"><img src="images/gallery2.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"><span>Champion of the giant board</span></div></div>
+      <div class="gph" data-venue="Earls Court Community Hub"><img src="images/gallery3.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"><span>Set up and ready to play</span></div></div>
+      <div class="gph" data-venue="Earls Court Community Hub"><img src="images/gallery4.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"><span>Coach Leonel at the board</span></div></div>
+      <div class="gph" data-venue="Brompton Library (past)"><img src="images/gallery5.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"><span>Brompton Library Chess Club</span></div><div class="past">Brompton Library — past</div></div>
+      <div class="gph" data-venue="Brompton Library (past)"><img src="images/gallery6.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"><span>All abilities welcome</span></div><div class="past">Brompton Library — past</div></div>
+      <div class="gph" data-venue="Chelsea Library (past)"><img src="images/gallery7.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"><span>Chess Club session</span></div><div class="past">Chelsea Library — past</div></div>
+      <div class="gph" data-venue="Chelsea Library (past)"><img src="images/gallery8.jpg" style="width:100%;height:100%;object-fit:cover"><div class="ov"><span>A full house at the tables</span></div><div class="past">Chelsea Library — past</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container fgrid" style="grid-template-columns:1.2fr 1fr 1fr">
+    <div>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">
+        <img src="images/logo.jpg" style="width:32px;height:32px;border-radius:50%;object-fit:cover">
+        <div><b style="color:var(--gold);font-family:'Playfair Display',serif">RBKC Chess</b><div style="font-size:11px;color:rgba(255,255,255,.6)">Community · Est. 2024</div></div>
+      </div>
+      <p style="font-size:13px;color:rgba(255,255,255,.75)">Promoting chess education and creating inclusive spaces across the Royal Borough of Kensington and Chelsea.</p>
+    </div>
+    <div><h3>Our Venue</h3><a>Earls Court Community Hub — 1A Aisgill Ave, W14 9NF</a><a>Brompton Library — 1-2-1 sessions, via booking</a><a style="opacity:.6">Chelsea Library (past)</a></div>
+    <div><h3>Contact</h3><a href="mailto:Officialfriendforlondon@proton.me">✉ Officialfriendforlondon@proton.me</a><a href="https://t.me/OFF4London" target="_blank">💬 Telegram: OFF4London</a><a href="https://www.instagram.com/p/DVXXp_bCCBF/?img_index=1" target="_blank">📷 Instagram</a></div>
+  </div>
+  <div class="container fbottom">
+    <span>♚ Founded by Leonel Mbaho, Chess Coach & Community Builder</span>
+    <span>© 2026 RBKC Chess Community. All rights reserved.</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
