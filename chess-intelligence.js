@@ -76,7 +76,7 @@
   }
 
   function parseLichessPgn(text, username) {
-    return text.split(/(?=^\\[Event )/m).filter(part => part.trim()).map(part => {
+    return text.split(/(?=^\[Event )/m).filter(part => part.trim()).map(part => {
       const header = name => {
         const match = part.match(new RegExp('^\\\\[' + name + ' "(.*?)"\\\\]', "m"));
         return match ? match[1] : "";
