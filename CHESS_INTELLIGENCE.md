@@ -1,19 +1,16 @@
 # Chess Intelligence on the RBKC website
 
-The Chess Intelligence page adds two free features to the static GitHub Pages site:
-
-1. Public Chess.com and Lichess profile, rating and recent game lookups.
-2. A coaching handoff that prepares a prompt with the selected game's PGN for the visitor to paste into their own ChatGPT chat.
+The Chess Intelligence page lets visitors open a public Lichess study in an embedded viewer, switch chapters, and export its PGN into a coaching prompt they can paste into their own ChatGPT chat. The supplied RBKC study link is preloaded; visitors can paste another Lichess study URL or an 8-character study ID.
 
 ## Privacy and costs
 
-The page asks only for a public platform username. It does not ask for chess platform passwords, store profiles or games, or send game data to an AI service. A visitor chooses when to copy the game prompt and submit it to ChatGPT. Their use of ChatGPT is governed by their own account and plan.
+The page requests only public Lichess study data. It does not ask for Lichess passwords, store studies, or send study data to an AI service. A visitor chooses when to copy the PGN and submit it to ChatGPT. Their use of ChatGPT is governed by their own account and plan.
 
-The page makes read-only requests to Chess.com and Lichess public APIs from the visitor's browser. Requests may be limited by those platforms. There is no paid API or hosted backend in this version.
+The page opens the Lichess study embed and makes a read-only request to the Lichess study PGN export endpoint from the visitor's browser. Private studies are unavailable without authentication. Requests may be limited by Lichess. There is no paid API or hosted backend in this version.
 
 ## Local preview
 
-Open this repository's folder in an editor and serve it as a static site. Do not open the HTML file as `file://`, because browsers may block its public API requests from that origin.
+Open this repository's folder in an editor and serve it as a static site. Do not open the HTML file as `file://`, because browsers may block cross-origin study export requests from that origin.
 
 ## Later paid coach
 
