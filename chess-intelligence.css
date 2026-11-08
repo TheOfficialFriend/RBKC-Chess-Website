@@ -1,0 +1,59 @@
+.ci-hero{background:linear-gradient(125deg,#1c2f4a,#2f4569);padding:64px 0 58px}
+.ci-hero-inner{max-width:780px;text-align:center}
+.ci-hero h1{font-size:clamp(36px,6vw,54px);line-height:1.1;color:#fff;margin:18px 0 12px}
+.ci-hero h1 em{display:block;font-style:normal;color:var(--gold-2)}
+.ci-hero p{color:rgba(255,255,255,.82);font-size:16px;max-width:620px;margin:0 auto}
+.chess-tabs a{text-decoration:none}
+.ci-content{padding-top:42px;padding-bottom:56px}
+.ci-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px;box-shadow:0 4px 14px rgba(28,47,74,.06);margin-bottom:20px}
+.ci-card h2{color:var(--navy);font-size:25px;margin-bottom:7px}
+.ci-muted{color:var(--muted);font-size:14px}
+.ci-search{display:grid;grid-template-columns:1fr minmax(260px,.9fr);column-gap:38px;row-gap:16px;align-items:start}
+.ci-search>div{padding-top:4px}
+.ci-search .eyebrow,.ci-coach .eyebrow,.ci-section-heading .eyebrow{margin-bottom:8px}
+.ci-form{display:grid;gap:8px}
+.ci-form label,.ci-coach label{font-size:13px;font-weight:700;color:var(--navy);margin-top:4px}
+.ci-form input,.ci-form select,.ci-coach textarea{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:11px 12px;background:#fff;color:#1e293b;font:inherit}
+.ci-form input:focus,.ci-form select:focus,.ci-coach textarea:focus{outline:3px solid rgba(201,168,76,.3);border-color:#8a6d1a}
+.ci-button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 16px;border-radius:8px;font:600 14px 'Inter',sans-serif;text-decoration:none;cursor:pointer;border:1px solid transparent}
+.ci-button-primary{background:var(--navy);color:#fff}
+.ci-button-primary:hover{background:var(--navy-2)}
+.ci-button-secondary{background:#fff;color:var(--navy);border-color:#cbd5e1}
+.ci-button-secondary:hover{background:#f8fafc}
+.ci-status{grid-column:1/-1;min-height:21px;font-size:13px;color:#475569}
+.ci-results[hidden]{display:none}
+.ci-profile-top,.ci-section-heading,.ci-game-top,.ci-actions,.ci-game-actions{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ci-profile-top{margin-bottom:8px}
+.ci-profile-top h2{margin:0}
+.ci-profile-link,.ci-text-link{color:#294c75;font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.ci-small-heading{font-size:15px;color:var(--navy);margin:22px 0 10px}
+.ci-ratings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px 18px}
+.ci-ratings dt{font-size:12px;color:var(--muted);text-transform:capitalize}
+.ci-ratings dd{font-weight:700;color:var(--navy);font-size:15px}
+.ci-games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.ci-game{padding:16px;border:1px solid var(--border);border-radius:10px;background:#fbfcfd}
+.ci-game h3{font:600 15px 'Inter',sans-serif;color:var(--navy)}
+.ci-game-top{align-items:flex-start;margin-bottom:5px}
+.ci-result{white-space:nowrap;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;background:#f1f5f9;color:#475569}
+.ci-result.win{background:#ecfdf5;color:#047857}
+.ci-result.loss{background:#fff1f2;color:#be123c}
+.ci-game-actions{justify-content:flex-start;margin-top:10px}
+.ci-game-coach{background:none;border:0;padding:0;font-family:inherit;cursor:pointer}
+.ci-coach{margin-top:20px}
+.ci-coach>p{max-width:760px;margin:0 0 14px}
+.ci-coach textarea{display:block;resize:vertical;min-height:150px;font:13px/1.55 ui-monospace,Consolas,monospace;margin:6px 0 14px}
+.ci-actions{justify-content:flex-start;flex-wrap:wrap}
+.ci-coach .ci-status{margin-top:12px}
+.ci-footnote{font-size:12px;color:var(--muted);margin:24px 2px 0}
+.ci-footer{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;font-size:13px}
+.ci-footer a{color:rgba(255,255,255,.8);text-decoration:underline}
+@media(max-width:760px){
+  .ci-search{grid-template-columns:1fr}
+  .ci-games{grid-template-columns:1fr}
+  .ci-ratings{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ci-content{padding-top:26px}
+  .ci-card{padding:20px}
+  .ci-profile-top,.ci-section-heading{align-items:flex-start}
+  .navwrap{height:auto;min-height:60px}
+  .chess-tabs{display:flex}
+}

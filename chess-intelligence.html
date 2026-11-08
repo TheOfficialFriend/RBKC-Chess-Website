@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chess Intelligence | RBKC Chess Community</title>
+  <meta name="description" content="Explore public Chess.com and Lichess profiles and games with RBKC Chess Intelligence.">
+  <link rel="canonical" href="https://rbkc-chess.co.uk/chess-intelligence.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="chess-intelligence.css">
+</head>
+<body>
+  <nav>
+    <div class="container navwrap">
+      <a class="brand" href="index.html" aria-label="RBKC Chess Community home">
+        <img src="images/logo.jpg" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover">
+        <div><b>RBKC Chess</b><span>Community · Est. 2024</span></div>
+      </a>
+      <div class="tabs chess-tabs">
+        <a class="tab" href="index.html">Home</a>
+        <a class="tab active" href="chess-intelligence.html" aria-current="page">Chess Intelligence</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="ci-hero">
+      <div class="container ci-hero-inner">
+        <span class="badge">RBKC Chess Community</span>
+        <h1>Chess <em>Intelligence</em></h1>
+        <p>Look up public Chess.com or Lichess profiles, explore recent games, and take a game to ChatGPT for a coaching review.</p>
+      </div>
+    </section>
+
+    <section class="container ci-content">
+      <div class="ci-card ci-search">
+        <div>
+          <span class="eyebrow">Public chess data</span>
+          <h2>Find a player</h2>
+          <p class="ci-muted">Enter a public username. No passwords or account access are needed.</p>
+        </div>
+        <form id="player-form" class="ci-form">
+          <label for="platform">Chess platform</label>
+          <select id="platform" name="platform">
+            <option value="chesscom">Chess.com</option>
+            <option value="lichess">Lichess</option>
+          </select>
+          <label for="username">Public username</label>
+          <input id="username" name="username" type="text" autocomplete="off" maxlength="30" required placeholder="Enter a username">
+          <button class="ci-button ci-button-primary" type="submit">Load profile and games</button>
+        </form>
+        <p class="ci-status" id="status" role="status" aria-live="polite">Choose a platform and enter a username to begin.</p>
+      </div>
+
+      <section class="ci-results" id="results" hidden aria-label="Player results">
+        <div class="ci-card ci-profile" id="profile-card"></div>
+        <div class="ci-card">
+          <div class="ci-section-heading">
+            <div><span class="eyebrow">Recent games</span><h2>Game history</h2></div>
+            <span class="ci-muted" id="games-count"></span>
+          </div>
+          <div class="ci-games" id="games"></div>
+        </div>
+        <div class="ci-card ci-coach">
+          <span class="eyebrow">Coaching handoff</span>
+          <h2>Review a game with ChatGPT</h2>
+          <p class="ci-muted">Select “Prepare for coach” on a game, then copy the prompt and paste it into ChatGPT. This uses your own ChatGPT access; the website does not send game data to an AI service.</p>
+          <label for="pgn-input">Game PGN</label>
+          <textarea id="pgn-input" rows="8" placeholder="Choose a recent game above, or paste a PGN here."></textarea>
+          <div class="ci-actions">
+            <button class="ci-button ci-button-primary" id="copy-prompt" type="button">Copy coaching prompt</button>
+            <a class="ci-button ci-button-secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT</a>
+          </div>
+          <p class="ci-status" id="coach-status" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+      <p class="ci-footnote">Chess.com and Lichess data is public and subject to each platform’s availability and rate limits. RBKC Chess Community is not affiliated with either platform.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container ci-footer">
+      <span>♚ RBKC Chess Community</span>
+      <a href="index.html">Back to the community website</a>
+    </div>
+  </footer>
+  <script src="chess-intelligence.js"></script>
+</body>
+</html>
