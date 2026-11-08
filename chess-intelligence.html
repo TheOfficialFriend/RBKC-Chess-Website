@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chess Intelligence | RBKC Chess Community</title>
-  <meta name="description" content="Open a public Lichess study, explore its moves, and prepare its PGN for a coaching review.">
+  <meta name="description" content="Open a Lichess study, explore its chapters, and prepare a PGN for a coaching review.">
   <link rel="canonical" href="https://rbkc-chess.co.uk/chess-intelligence.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,7 @@
       <div class="container ci-hero-inner">
         <span class="badge">RBKC Chess Community</span>
         <h1>Chess <em>Intelligence</em></h1>
-        <p>Open a public Lichess study on this page. Explore its chapters and prepare the study PGN for a coaching review.</p>
+        <p>Open a Lichess study from this page. Explore its chapters and prepare a PGN for a coaching review.</p>
       </div>
     </section>
 
@@ -53,18 +53,15 @@
       <section class="ci-results" id="study-results" aria-label="Lichess study">
         <div class="ci-card">
           <div class="ci-section-heading">
-            <div><span class="eyebrow">Study viewer</span><h2 id="study-title">Lichess study</h2></div>
-            <a class="ci-profile-link" id="study-open-link" href="https://lichess.org/study/3i3ARGDs" target="_blank" rel="noopener noreferrer">Open on Lichess ↗</a>
+            <div><span class="eyebrow">Your study</span><h2 id="study-title">Lichess study</h2></div>
+            <a class="ci-button ci-button-primary" id="study-open-link" href="https://lichess.org/study/3i3ARGDs" target="_blank" rel="noopener noreferrer">Open study on Lichess ↗</a>
           </div>
-          <div class="ci-study-frame">
-            <iframe id="study-frame" title="Interactive Lichess study viewer" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-          </div>
+          <p class="ci-muted" id="study-help">Open the study on Lichess to browse its chapters and moves. You can choose a different study link above.</p>
         </div>
         <div class="ci-card ci-coach">
           <span class="eyebrow">Coaching handoff</span>
           <h2>Review the study with ChatGPT</h2>
-          <p class="ci-muted">Load the study PGN, then copy the coaching prompt and paste it into your own ChatGPT chat. The website does not send study data to an AI service.</p>
-          <button class="ci-button ci-button-secondary" id="load-study-pgn" type="button">Load study PGN</button>
+          <p class="ci-muted">On Lichess, choose a chapter and copy its PGN from Share &amp; export. Paste it here, then copy the coaching prompt into your own ChatGPT chat. The website does not send study data to an AI service.</p>
           <label for="pgn-input">Study PGN</label>
           <textarea id="pgn-input" rows="8" placeholder="Load the study PGN, or paste a PGN here."></textarea>
           <div class="ci-actions">
@@ -74,7 +71,7 @@
           <p class="ci-status" id="coach-status" role="status" aria-live="polite"></p>
         </div>
       </section>
-      <p class="ci-footnote">Only public Lichess studies can be loaded. Study availability and API limits are controlled by Lichess. RBKC Chess Community is not affiliated with Lichess.</p>
+      <p class="ci-footnote">Study access is controlled by Lichess. RBKC Chess Community is not affiliated with Lichess. RBKC Chess Community is not affiliated with Lichess.</p>
     </section>    </section>
   </main>
 
