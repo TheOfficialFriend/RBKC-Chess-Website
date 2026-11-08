@@ -57,3 +57,7 @@
   .navwrap{height:auto;min-height:60px}
   .chess-tabs{display:flex}
 }
+
+.ci-study-frame{overflow:hidden;border:1px solid var(--border);border-radius:10px;background:#f8fafc;margin-top:18px}
+.ci-study-frame iframe{display:block;width:100%;height:min(72vh,720px);min-height:560px;border:0}
+@media(max-width:760px){.ci-study-frame iframe{height:70vh;min-height:500px}}
