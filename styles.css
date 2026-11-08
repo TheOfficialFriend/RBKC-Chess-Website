@@ -130,6 +130,8 @@ footer{background:var(--navy);color:rgba(255,255,255,.8);padding:50px 0 24px}
 .ph-green{background:linear-gradient(135deg,#2d4a3e,#1c2f4a)}
 @media(max-width:600px){
   .vgrid{grid-template-columns:1fr}
+  .egrid{grid-template-columns:1fr}
+  .ecard .top{gap:8px;flex-wrap:wrap}
   .vcard .img{height:160px}
   .vcard .body{font-size:13px;line-height:1.6}
 }
