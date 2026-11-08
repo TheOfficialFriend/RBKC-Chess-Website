@@ -96,4 +96,4 @@
   .ci-notation tbody td{font-weight:600;color:var(--navy)}
   .ci-notation tbody tr:nth-child(even){background:rgba(226,232,240,.45)}
 }
-@media(max-width:760px){.ci-study-frame{display:none!important}}
+@media(max-width:760px){.ci-study-frame{display:block!important}.ci-study-frame iframe{height:640px;min-height:640px}}
