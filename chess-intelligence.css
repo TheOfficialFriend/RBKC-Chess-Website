@@ -61,3 +61,11 @@
 .ci-study-frame{overflow:hidden;border:1px solid var(--border);border-radius:10px;background:#f8fafc;margin-top:18px}
 .ci-study-frame iframe{display:block;width:100%;height:min(72vh,720px);min-height:560px;border:0}
 @media(max-width:760px){.ci-study-frame iframe{height:70vh;min-height:500px}}
+
+.ci-study-chapters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.ci-study-chapter{border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:var(--navy);padding:10px 14px;font:600 13px 'Inter',sans-serif;cursor:pointer}
+.ci-study-chapter:hover{background:#f8fafc}
+.ci-study-chapter.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.ci-study-heading{margin-bottom:8px}
+.ci-study-heading h3{font:600 16px 'Inter',sans-serif;color:var(--navy);margin:0}
+@media(max-width:760px){.ci-study-chapter{flex:1 1 100%;text-align:left}.ci-study-heading{align-items:flex-start}}
