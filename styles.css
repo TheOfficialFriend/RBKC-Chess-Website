@@ -110,9 +110,10 @@ nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.97);backdrop-f
 .gph .past{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);color:#fff;font-size:9.5px;font-weight:600;padding:2px 7px;border-radius:6px}
 
 footer{background:var(--navy);color:rgba(255,255,255,.8);padding:50px 0 24px}
-.fgrid{display:grid;grid-template-columns:1.3fr 1fr 1.3fr;gap:36px}
+.fgrid>div{min-width:0}
+.fgrid{display:grid;grid-template-columns:1.3fr 1fr 1.3fr;gap:36px;min-width:0}
 .fgrid h3{color:var(--gold);font-size:14px;margin-bottom:14px;font-family:'Inter',sans-serif}
-.fgrid a{display:block;color:rgba(255,255,255,.75);font-size:13px;margin-bottom:9px}
+.fgrid a{display:block;color:rgba(255,255,255,.75);font-size:13px;margin-bottom:9px;overflow-wrap:anywhere}
 .fbottom{border-top:1px solid rgba(255,255,255,.15);margin-top:30px;padding-top:18px;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.55);flex-wrap:wrap;gap:10px}
 
 @media(max-width:860px){
@@ -135,6 +136,9 @@ footer{background:var(--navy);color:rgba(255,255,255,.8);padding:50px 0 24px}
   .ecard .top{gap:8px;flex-wrap:wrap}
   .vcard .img{height:160px}
   .vcard .body{font-size:13px;line-height:1.6}
+  footer{padding:36px 0 20px}
+  .fgrid{gap:24px}
+  .fbottom{flex-direction:column;align-items:flex-start;gap:8px}
 }
 
 .founder-ph{width:46px;height:46px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;border:2px solid rgba(28,47,74,.15)}
