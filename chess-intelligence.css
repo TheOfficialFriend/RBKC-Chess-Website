@@ -59,9 +59,9 @@
 }
 
 .ci-study-frame{overflow:hidden;border:1px solid var(--border);border-radius:10px;background:#f8fafc;margin-top:18px}
-.ci-study-frame iframe{display:block;width:100%;height:min(72vh,720px);min-height:560px;border:0}
+ .ci-study-frame iframe{display:block;width:100%;height:min(72vh,720px);min-height:560px;border:0}
 @media(max-width:760px){
-  .ci-study-frame iframe{height:min(110vh,1000px);min-height:900px}
+  .ci-study-frame iframe{height:70vh;min-height:500px}
   .navwrap{height:auto;min-height:60px;flex-wrap:wrap;overflow:visible;justify-content:center;padding-top:8px;padding-bottom:8px}
   .chess-tabs{display:flex;width:100%;justify-content:center;flex-wrap:wrap}
 }
@@ -83,3 +83,16 @@
 .ci-search-result{width:100%;text-align:left;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:11px 12px;color:var(--navy);font:600 13px/1.5 'Inter',sans-serif;cursor:pointer}
 .ci-search-result:hover,.ci-search-result:focus{background:#eef3fa;border-color:#b8c5d7}
 @media(max-width:600px){.ci-player-search{margin:18px 0 15px}.ci-search-result{font-size:12.5px}}
+
+.ci-notation{display:none}
+@media(max-width:760px){
+  .ci-notation{display:block;margin:18px 0;border:1px solid var(--border);border-radius:10px;background:#f8fafc;padding:12px}
+  .ci-notation summary{font-weight:700;color:var(--navy);cursor:pointer;margin-bottom:10px}
+  .ci-notation-scroll{overflow-x:hidden}
+  .ci-notation table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px}
+  .ci-notation th,.ci-notation td{padding:7px 8px;border-bottom:1px solid var(--border);text-align:left}
+  .ci-notation thead th{color:var(--muted);font-size:11px}
+  .ci-notation tbody th{width:36px;color:var(--muted);font-weight:500}
+  .ci-notation tbody td{font-weight:600;color:var(--navy)}
+  .ci-notation tbody tr:nth-child(even){background:rgba(226,232,240,.45)}
+}
