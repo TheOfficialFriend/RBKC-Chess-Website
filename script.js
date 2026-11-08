@@ -4,7 +4,7 @@ function showView(id){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.view===id));
   window.scrollTo(0,0);
 }
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showView(t.dataset.view)));
+document.querySelectorAll('.tab[data-view]').forEach(t=>t.addEventListener('click',()=>showView(t.dataset.view)));
 
 // Gallery: filter by venue + click-to-enlarge lightbox
 document.querySelectorAll(".fbtn").forEach(function(btn){
