@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="chess-intelligence.css">
+  <link rel="stylesheet" href="styles.css?v=mobilefix-20261108-2">
+  <link rel="stylesheet" href="chess-intelligence.css?v=mobilefix-20261108-2">
 </head>
 <body>
   <nav>
@@ -31,19 +31,19 @@
       <div class="container ci-hero-inner">
         <span class="badge">RBKC Chess Community</span>
         <h1>Chess <em>Intelligence</em></h1>
-        <p>Review the RBKC Chess Community study session and explore all three chapters right here.</p>
+        <p>Search for players and review games from the RBKC Chess Community Lichess study.</p>
       </div>
     </section>
 
     <section class="container ci-content">
       <div class="ci-card">
         <span class="eyebrow">RBKC Chess study</span>
-        <h2>Three-game study session</h2>
+        <h2>RBKC Chess Games</h2>
         <p class="ci-muted">Choose a chapter to review the game moves on this page.</p>
         <div class="ci-player-search">
           <label for="study-player-search">Find games by player name</label>
           <input id="study-player-search" type="search" autocomplete="off" placeholder="Search Ahmed Dabo or Leonel Mbaho" aria-describedby="study-search-help">
-          <p class="ci-search-help" id="study-search-help">Search player names in the three chapters currently listed.</p>
+          <p class="ci-search-help" id="study-search-help">Search the games currently listed by either player’s name.</p>
           <div class="ci-search-results" id="study-search-results" role="status" aria-live="polite" hidden></div>
         </div>
         <div class="ci-study-chapters" role="group" aria-label="Choose a study chapter">
@@ -69,6 +69,6 @@
       <a href="index.html">Back to the community website</a>
     </div>
   </footer>
-  <script src="chess-intelligence.js?v=player-search-20261108-1"></script>
+  <script src="chess-intelligence.js?v=player-search-20261108-2"></script>
 </body>
 </html>
