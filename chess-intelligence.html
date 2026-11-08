@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=mobilefix-20261108-2">
-  <link rel="stylesheet" href="chess-intelligence.css?v=mobilefix-20261108-2">
+  <link rel="stylesheet" href="chess-intelligence.css?v=mobilefix-20261108-3">
 </head>
 <body>
   <nav>
@@ -55,6 +55,15 @@
           <h3 id="study-chapter-title">Chapter 1 · Tactical awareness</h3>
           <a class="ci-profile-link" id="study-open-link" href="https://lichess.org/study/3i3ARGDs/cz0GUuAz" target="_blank" rel="noopener noreferrer">Open on Lichess ↗</a>
         </div>
+        <details class="ci-notation" open>
+          <summary>Full algebraic notation</summary>
+          <div class="ci-notation-scroll">
+            <table>
+              <thead><tr><th scope="col">Move</th><th scope="col">White</th><th scope="col">Black</th></tr></thead>
+              <tbody id="study-notation-rows"></tbody>
+            </table>
+          </div>
+        </details>
         <div class="ci-study-frame">
           <iframe id="study-frame" title="RBKC Chess study chapter 1" src="https://lichess.org/study/embed/3i3ARGDs/cz0GUuAz" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
@@ -69,6 +78,6 @@
       <a href="index.html">Back to the community website</a>
     </div>
   </footer>
-  <script src="chess-intelligence.js?v=player-search-20261108-2"></script>
+  <script src="chess-intelligence.js?v=player-search-20261108-3"></script>
 </body>
 </html>
