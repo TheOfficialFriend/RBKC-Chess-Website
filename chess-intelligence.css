@@ -60,7 +60,11 @@
 
 .ci-study-frame{overflow:hidden;border:1px solid var(--border);border-radius:10px;background:#f8fafc;margin-top:18px}
 .ci-study-frame iframe{display:block;width:100%;height:min(72vh,720px);min-height:560px;border:0}
-@media(max-width:760px){.ci-study-frame iframe{height:70vh;min-height:500px}}
+@media(max-width:760px){
+  .ci-study-frame iframe{height:min(110vh,1000px);min-height:900px}
+  .navwrap{height:auto;min-height:60px;flex-wrap:wrap;overflow:visible;justify-content:center;padding-top:8px;padding-bottom:8px}
+  .chess-tabs{display:flex;width:100%;justify-content:center;flex-wrap:wrap}
+}
 
 .ci-study-chapters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
 .ci-study-chapter{border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:var(--navy);padding:10px 14px;font:600 13px 'Inter',sans-serif;cursor:pointer}
