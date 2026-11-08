@@ -36,42 +36,24 @@
     </section>
 
     <section class="container ci-content">
-      <div class="ci-card ci-search">
-        <div>
-          <span class="eyebrow">Lichess study</span>
-          <h2>Open a study session</h2>
-          <p class="ci-muted">Paste a Lichess study link or its 8-character study ID. Open it on Lichess to browse its chapters and moves.</p>
+      <div class="ci-card">
+        <span class="eyebrow">RBKC Chess study</span>
+        <h2>Three-game study session</h2>
+        <p class="ci-muted">Choose a chapter to review the game moves on this page.</p>
+        <div class="ci-study-chapters" role="group" aria-label="Choose a study chapter">
+          <button class="ci-study-chapter active" type="button" aria-pressed="true" data-chapter="cz0GUuAz">Chapter 1 · Tactical awareness</button>
+          <button class="ci-study-chapter" type="button" aria-pressed="false" data-chapter="U5NhdKPO">Chapter 2 · Space vs development</button>
+          <button class="ci-study-chapter" type="button" aria-pressed="false" data-chapter="Oj0Y15F1">Chapter 3 · Positional pressure</button>
         </div>
-        <form id="study-form" class="ci-form">
-          <label for="study-link">Lichess study link or ID</label>
-          <input id="study-link" name="study-link" type="text" autocomplete="url" maxlength="300" required value="https://lichess.org/study/3i3ARGDs" placeholder="https://lichess.org/study/3i3ARGDs">
-          <button class="ci-button ci-button-primary" type="submit">Open study</button>
-        </form>
-        <p class="ci-status" id="study-status" role="status" aria-live="polite">Ready to open the RBKC study.</p>
+        <div class="ci-section-heading ci-study-heading">
+          <h3 id="study-chapter-title">Chapter 1 · Tactical awareness</h3>
+          <a class="ci-profile-link" id="study-open-link" href="https://lichess.org/study/3i3ARGDs/cz0GUuAz" target="_blank" rel="noopener noreferrer">Open on Lichess ↗</a>
+        </div>
+        <div class="ci-study-frame">
+          <iframe id="study-frame" title="RBKC Chess study chapter 1" src="https://lichess.org/study/embed/3i3ARGDs/cz0GUuAz" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
       </div>
-
-      <section class="ci-results" id="study-results" aria-label="Lichess study">
-        <div class="ci-card">
-          <div class="ci-section-heading">
-            <div><span class="eyebrow">Your study</span><h2 id="study-title">Lichess study</h2></div>
-            <a class="ci-button ci-button-primary" id="study-open-link" href="https://lichess.org/study/3i3ARGDs" target="_blank" rel="noopener noreferrer">Open study on Lichess ↗</a>
-          </div>
-          <p class="ci-muted" id="study-help">Open the study on Lichess to browse its chapters and moves. You can choose a different study link above.</p>
-        </div>
-        <div class="ci-card ci-coach">
-          <span class="eyebrow">Coaching handoff</span>
-          <h2>Review the study with ChatGPT</h2>
-          <p class="ci-muted">On Lichess, choose a chapter and copy its PGN from Share &amp; export. Paste it here, then copy the coaching prompt into your own ChatGPT chat. The website does not send study data to an AI service.</p>
-          <label for="pgn-input">Study PGN</label>
-          <textarea id="pgn-input" rows="8" placeholder="Load the study PGN, or paste a PGN here."></textarea>
-          <div class="ci-actions">
-            <button class="ci-button ci-button-primary" id="copy-prompt" type="button">Copy coaching prompt</button>
-            <a class="ci-button ci-button-secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT</a>
-          </div>
-          <p class="ci-status" id="coach-status" role="status" aria-live="polite"></p>
-        </div>
-      </section>
-      <p class="ci-footnote">Study access is controlled by Lichess. RBKC Chess Community is not affiliated with Lichess.</p>
+      <p class="ci-footnote">Study viewer provided by Lichess. RBKC Chess Community is not affiliated with Lichess.</p>
     </section>    </section>
   </main>
 
