@@ -76,9 +76,9 @@
   }
 
   function parseLichessPgn(text, username) {
-    return text.split(/(?=^\[Event )/m).filter(part => part.trim()).map(part => {
+    return text.split(/(?=^\\[Event )/m).filter(part => part.trim()).map(part => {
       const header = name => {
-        const match = part.match(new RegExp('^\\\\[' + name + ' "(.*?)"\\\\]', "m"));
+        const match = part.match(new RegExp("^\\\\[" + name + ' "(.*?)"\\\\]', "m"));
         return match ? match[1] : "";
       };
       const white = header("White");
@@ -86,12 +86,17 @@
       const site = header("Site");
       const score = header("Result");
       const userIsWhite = white.toLowerCase() === username.toLowerCase();
-      const userScore = score === "1/2-1/2" ? "Draw" : ((score === "1-0") === userIsWhite ? "Win" : "Loss");
+      const result = score === "1/2-1/2" ? "Draw"
+        : (score === "1-0" || score === "0-1")
+          ? (((score === "1-0") === userIsWhite) ? "Win" : "Loss")
+          : "Result unavailable";
+      const rawDate = header("UTCDate") || header("Date");
+      const date = /^\\d{4}\\.\\d{2}\\.\\d{2}$/.test(rawDate) ? formatDate(rawDate.replaceAll(".", "-")) : rawDate;
       return {
         title: (white || "White") + " vs " + (black || "Black"),
-        date: header("UTCDate") || header("Date"),
-        result: userScore,
-        resultClass: userScore.toLowerCase(),
+        date,
+        result,
+        resultClass: result.toLowerCase(),
         timeControl: header("TimeControl") || "Game",
         url: site,
         pgn: part.trim()
