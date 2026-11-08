@@ -75,20 +75,23 @@
     };
   }
 
-  function parseLichessPgn(text) {
-    return text.split(/(?=^\[Event )/m).filter(part => part.trim()).map(part => {
+  function parseLichessPgn(text, username) {
+    return text.split(/(?=^\\[Event )/m).filter(part => part.trim()).map(part => {
       const header = name => {
-        const match = part.match(new RegExp('^\\[' + name + ' "(.*?)"\\]', "m"));
+        const match = part.match(new RegExp('^\\\\[' + name + ' "(.*?)"\\\\]', "m"));
         return match ? match[1] : "";
       };
       const white = header("White");
       const black = header("Black");
       const site = header("Site");
+      const score = header("Result");
+      const userIsWhite = white.toLowerCase() === username.toLowerCase();
+      const userScore = score === "1/2-1/2" ? "Draw" : ((score === "1-0") === userIsWhite ? "Win" : "Loss");
       return {
         title: (white || "White") + " vs " + (black || "Black"),
         date: header("UTCDate") || header("Date"),
-        result: header("Result") || "Game",
-        resultClass: header("Result") === "1-0" || header("Result") === "0-1" ? "" : "",
+        result: userScore,
+        resultClass: userScore.toLowerCase(),
         timeControl: header("TimeControl") || "Game",
         url: site,
         pgn: part.trim()
@@ -139,7 +142,7 @@
       url: "https://lichess.org/@/" + encoded,
       joined: profile.createdAt ? formatDate(new Date(profile.createdAt).toISOString()) : "",
       ratings: makeRatingList(profile, "lichess"),
-      games: parseLichessPgn(pgn)
+      games: parseLichessPgn(pgn, username)
     };
   }
 
