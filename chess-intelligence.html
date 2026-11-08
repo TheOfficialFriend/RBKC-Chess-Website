@@ -40,6 +40,12 @@
         <span class="eyebrow">RBKC Chess study</span>
         <h2>Three-game study session</h2>
         <p class="ci-muted">Choose a chapter to review the game moves on this page.</p>
+        <div class="ci-player-search">
+          <label for="study-player-search">Find games by player name</label>
+          <input id="study-player-search" type="search" autocomplete="off" placeholder="Search Ahmed Dabo or Leonel Mbaho" aria-describedby="study-search-help">
+          <p class="ci-search-help" id="study-search-help">Search player names in the three chapters currently listed.</p>
+          <div class="ci-search-results" id="study-search-results" role="status" aria-live="polite" hidden></div>
+        </div>
         <div class="ci-study-chapters" role="group" aria-label="Choose a study chapter">
           <button class="ci-study-chapter active" type="button" aria-pressed="true" data-chapter="cz0GUuAz">Chapter 1 · Tactical awareness</button>
           <button class="ci-study-chapter" type="button" aria-pressed="false" data-chapter="U5NhdKPO">Chapter 2 · Space vs development</button>
@@ -63,6 +69,6 @@
       <a href="index.html">Back to the community website</a>
     </div>
   </footer>
-  <script src="chess-intelligence.js?v=study-20261108-2"></script>
+  <script src="chess-intelligence.js?v=player-search-20261108-1"></script>
 </body>
 </html>
