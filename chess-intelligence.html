@@ -83,6 +83,41 @@
           </div>
         </details>
       </div>
+      <div class="ci-card ci-training-card" id="opening-training">
+        <span class="eyebrow">Free practice</span>
+        <h2>Opening &amp; Middlegame Trainer</h2>
+        <p class="ci-muted">Practise the moves from the RBKC study games. In opening mode, the opponent’s replies play automatically. In middlegame mode, find the move played in the game.</p>
+        <div class="training-controls">
+          <label>Practice
+            <select id="training-mode">
+              <option value="opening">Opening line</option>
+              <option value="middlegame">Middlegame position</option>
+            </select>
+          </label>
+          <label>Game
+            <select id="training-game">
+              <option value="0">Ahmed Dabo vs Leonel Mbaho · Tactical awareness</option>
+              <option value="1">Ahmed Dabo · Space vs development</option>
+              <option value="2">Ahmed Dabo vs Leonel Mbaho · Positional pressure</option>
+            </select>
+          </label>
+          <label>Play as
+            <select id="training-side">
+              <option value="w">White</option>
+              <option value="b">Black</option>
+            </select>
+          </label>
+        </div>
+        <p class="training-progress" id="training-progress" aria-live="polite"></p>
+        <div class="training-board" id="training-board" role="group" aria-label="Interactive chessboard"></div>
+        <p class="training-status" id="training-status" role="status" aria-live="polite"></p>
+        <div class="training-actions">
+          <button class="ci-button ci-button-secondary" id="training-hint" type="button">Show move hint</button>
+          <button class="ci-button ci-button-secondary" id="training-reset" type="button">Restart</button>
+          <button class="ci-button ci-button-primary" id="training-next" type="button" hidden>Next position</button>
+        </div>
+        <p class="training-note">The trainer follows moves recorded in these games; it does not label them as engine-best moves. Your practice stays in this browser.</p>
+      </div>
       <p class="ci-footnote">Study viewer provided by Lichess. RBKC Chess Community is not affiliated with Lichess.</p>
       <div class="ci-card">
         <span class="eyebrow">Explore a position</span>
@@ -105,6 +140,8 @@
     </div>
   </footer>
   <script src="chess-intelligence.js?v=player-search-20261108-3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.4.0/chess.min.js"></script>
+  <script src="chess-training.js?v=trainer-20261109-1"></script>
   <script>
     (()=>{const open=document.getElementById("open-analysis-board"),close=document.getElementById("close-analysis-board");if(!open||!close)return;open.addEventListener("click",()=>document.body.classList.add("ci-analysis-expanded"));close.addEventListener("click",()=>document.body.classList.remove("ci-analysis-expanded"));document.addEventListener("keydown",e=>{if(e.key==="Escape")document.body.classList.remove("ci-analysis-expanded")})})();
   </script>
