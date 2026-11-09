@@ -107,7 +107,7 @@
       showStatus(mistakes >= 2 && answer ? "Not quite. Hint: " + answer.san : "Not that move. Try again.", "retry");
       return;
     }
-    chess.move({ from: candidate.from, to: candidate.to, promotion: candidate.promotion || "q" });
+    chess.move(candidate.promotion ? { from: candidate.from, to: candidate.to, promotion: candidate.promotion } : { from: candidate.from, to: candidate.to });
     selected = null; targets = [];
     if (mode === "opening") {
       ply++;
