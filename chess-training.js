@@ -131,7 +131,7 @@
 
   function startOpening() {
     chess = new Chess();
-    selected = null; targets = []; mistakes = 0; puzzleSolved = false; nextEl.hidden = true; hintEl.hidden = true;
+    selected = null; targets = []; mistakes = 0; puzzleSolved = false; nextEl.hidden = true;
     if (userColor === "b" && activeGame.moves.length) {
       chess.move(activeGame.moves[0]);
       ply = 1;
