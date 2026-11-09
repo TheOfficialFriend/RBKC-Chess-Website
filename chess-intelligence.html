@@ -11,7 +11,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=mobilefix-20261108-2">
   <link rel="stylesheet" href="chess-intelligence.css?v=mobilefix-20261108-6">
-  <style>@media(max-width:760px){.ci-study-frame{display:block!important}.ci-study-frame iframe{height:460px!important;min-height:460px!important}}.ci-analysis-frame{overflow:hidden;border:1px solid var(--border);border-radius:10px;background:#f8fafc;margin-top:18px}.ci-analysis-frame iframe{display:block;width:100%;height:1100px;border:0}.ci-analysis-open{display:none}@media(max-width:760px){.ci-analysis-frame{display:block!important}.ci-analysis-frame iframe{height:760px!important}.ci-analysis-open{display:none!important}}</style>
+  <style>
+    @media(max-width:760px){.ci-study-frame{display:block!important}.ci-study-frame iframe{height:460px!important;min-height:460px!important}}
+    .ci-analysis-frame{overflow:hidden;border:1px solid var(--border);border-radius:10px;background:#f8fafc;margin-top:18px}
+    .ci-analysis-frame iframe{display:block;width:100%;height:1100px;border:0}
+    .ci-analysis-open,.ci-analysis-close{display:none}
+    @media(max-width:760px){
+      .ci-analysis-open{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:48px;margin-top:12px}
+      .ci-analysis-frame{display:none}
+      body.ci-analysis-expanded{overflow:hidden}
+      body.ci-analysis-expanded .ci-analysis-frame{display:block;position:fixed;inset:0;z-index:9999;margin:0;border:0;border-radius:0;background:#fff}
+      body.ci-analysis-expanded .ci-analysis-frame iframe{width:100%;height:100%;height:100dvh}
+      .ci-analysis-close{display:none}
+      body.ci-analysis-expanded .ci-analysis-close{display:flex;position:fixed;top:max(10px,env(safe-area-inset-top));left:10px;z-index:10001;min-height:42px;padding:8px 14px;border:0;border-radius:8px;background:#1d3557;color:#fff;font:600 15px Inter,Arial,sans-serif;box-shadow:0 2px 10px #0003}
+    }
+  </style>
 </head>
 <body>
   <nav>
@@ -74,7 +88,8 @@
         <span class="eyebrow">Explore a position</span>
         <h2>Analysis Board</h2>
         <p class="ci-muted">Use Lichess analysis to set up positions, explore games and run Stockfish evaluations.</p>
-        <a class="ci-button ci-button-primary ci-analysis-open" href="https://lichess.org/analysis" target="_blank" rel="noopener noreferrer">Open the interactive analysis board on Lichess ↗</a>
+        <button class="ci-button ci-button-primary ci-analysis-open" id="open-analysis-board" type="button">Open full-screen analysis board</button>
+        <button class="ci-analysis-close" id="close-analysis-board" type="button" aria-label="Close analysis board">Close board ✕</button>
         <div class="ci-analysis-frame">
           <iframe title="Lichess analysis board" src="https://lichess.org/embed/analysis?theme=blue&amp;bg=light" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
@@ -90,5 +105,8 @@
     </div>
   </footer>
   <script src="chess-intelligence.js?v=player-search-20261108-3"></script>
+  <script>
+    (()=>{const open=document.getElementById("open-analysis-board"),close=document.getElementById("close-analysis-board");if(!open||!close)return;open.addEventListener("click",()=>document.body.classList.add("ci-analysis-expanded"));close.addEventListener("click",()=>document.body.classList.remove("ci-analysis-expanded"));document.addEventListener("keydown",e=>{if(e.key==="Escape")document.body.classList.remove("ci-analysis-expanded")})})();
+  </script>
 </body>
 </html>
