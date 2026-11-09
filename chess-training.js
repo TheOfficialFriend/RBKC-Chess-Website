@@ -1,3 +1,5 @@
+import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
+
 (() => {
   const root = document.getElementById("opening-training");
   if (!root) return;
@@ -10,11 +12,6 @@
   const hintEl = root.querySelector("#training-hint");
   const nextEl = root.querySelector("#training-next");
   const resetEl = root.querySelector("#training-reset");
-  if (!window.Chess) {
-    statusEl.textContent = "The chessboard could not load. Please refresh the page and try again.";
-    return;
-  }
-
   const games = [
     { name: "Ahmed Dabo vs Leonel Mbaho · Tactical awareness", moves: ["g3","c5","Bg2","Nc6","c4","g6","Nc3","Bg7","Bxc6","dxc6","Ne4","Nf6","Nxc5","O-O","Nf3","Bh3","Ng5","Bg2","Rg1","h6","Rxg2","hxg5","d4","b6","Nd3","Qxd4","Bxg5","Rad8","Be3","Qxc4","b3","Ne4","bxc4","Bxa1","Qxa1","c5","Bh6"] },
     { name: "Ahmed Dabo · Space vs development", moves: ["g3","d5","d4","Bg4","f3","Bh5","g4","Bg6","h4","h6","h5","Bh7","Bf4","c5","Nd2","Nc6","c3","Nf6","Qa4","Qb6","b3","cxd4","cxd4","Qxd4","Qxd4","Nxd4","Be3","e5","Rc1","Nc2+","Kf2","Rc8","Bxa7","d4","Bg2","Ba3","Rd1","Ne3","Re1","Nxg2","Kxg2","Rc1","Rxc1","Bxc1","Nc4","Ne7","Nh3","Be3","Nd6+","Kd7","Nxb7","Ra8","Nc5+","Kc7","Ne6+","Kb7","Bc5","Rxa2","Bxe7","Rxe2+","Kf1","Bd3","Nc5+","Kc6","Nxd3","Ra2","Nb4+"] },
