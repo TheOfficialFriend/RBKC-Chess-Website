@@ -71,7 +71,7 @@
       const options = chess.moves({ verbose: true });
       return options.find(move => stripSan(move.san) === stripSan(san)) || null;
     }
-    return puzzleList[puzzleIndex] || null;
+    return puzzleList[puzzleIndex]?.move || null;
   }
 
   function onSquare(square) {
