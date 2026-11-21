@@ -47,7 +47,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
   function ensureEngine() {
     if (engineReadyPromise) return engineReadyPromise;
     engineReadyPromise = new Promise((resolve, reject) => {
-      const workerCode = 'importScripts("' + engineScript + '");';
+      const workerCode = 'const pending=[];self.onmessage=e=>pending.push(e.data);importScripts("' + engineScript + '");const engineHandler=self.onmessage;self.onmessage=e=>engineHandler(e);for(const command of pending)engineHandler({data:command});';
       const workerUrl = URL.createObjectURL(new Blob([workerCode], { type: "text/javascript" }));
       engineWorker = new Worker(workerUrl);
       let startupTimer = setTimeout(() => reject(new Error("Stockfish took too long to start.")), 20000);
