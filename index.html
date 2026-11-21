@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=mobilefix-20261108-2">
+<link rel="stylesheet" href="styles.css?v=venue-lightbox-20261121-1">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -243,6 +243,44 @@
   </div>
 </footer>
 
+<dialog class="image-viewer" id="image-viewer" aria-label="Photo details">
+  <button class="image-viewer-close" type="button" aria-label="Close photo">Close</button>
+  <figure><img id="image-viewer-photo" alt=""><figcaption><strong id="image-viewer-title"></strong><span id="image-viewer-description"></span></figcaption></figure>
+</dialog>
 <script src="script.js"></script>
+<script>
+  (() => {
+    const dialog = document.getElementById("image-viewer");
+    const photo = document.getElementById("image-viewer-photo");
+    const title = document.getElementById("image-viewer-title");
+    const description = document.getElementById("image-viewer-description");
+    if (!dialog || !photo) return;
+    const cards = document.querySelectorAll(".venues .vfeatured .img, .venues .vcard .img, .gph");
+    cards.forEach((card, index) => {
+      const image = card.querySelector("img");
+      if (!image) return;
+      const heading = card.querySelector(".name, .body h3, .ov span");
+      const place = card.closest(".vcard, .vfeatured")?.querySelector(".body");
+      const extra = card.querySelector(".past");
+      const caption = card.closest(".gph") ? [heading?.textContent.trim(), extra?.textContent.trim() || card.dataset.venue].filter(Boolean) : [heading?.textContent.trim(), place?.innerText.trim()].filter(Boolean);
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", "Open photo: " + (caption[0] || image.alt || "chess community"));
+      card.addEventListener("click", () => {
+        photo.src = image.currentSrc || image.src;
+        photo.alt = image.alt || caption[0] || "RBKC Chess Community";
+        title.textContent = caption[0] || "RBKC Chess Community";
+        description.textContent = caption[1] || "";
+        if (typeof dialog.showModal === "function") dialog.showModal();
+        else dialog.setAttribute("open", "");
+      });
+      card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); card.click(); }
+      });
+    });
+    dialog.querySelector(".image-viewer-close").addEventListener("click", () => dialog.close ? dialog.close() : dialog.removeAttribute("open"));
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close ? dialog.close() : dialog.removeAttribute("open"); });
+  })();
+</script>
 </body>
 </html>
