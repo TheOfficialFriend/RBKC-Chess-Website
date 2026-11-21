@@ -83,41 +83,6 @@
           </div>
         </details>
       </div>
-      <div class="ci-card ci-training-card" id="opening-training">
-        <span class="eyebrow">Free practice</span>
-        <h2>Opening &amp; Middlegame Trainer</h2>
-        <p class="ci-muted">Play an opening line against Stockfish, or try to find the top move from a RBKC middlegame position. It checks your move against its engine search and shows you what was played in the game.</p>
-        <div class="training-controls">
-          <label>Practice
-            <select id="training-mode">
-              <option value="opening">Opening line</option>
-              <option value="middlegame">Middlegame position</option>
-            </select>
-          </label>
-          <label>Game
-            <select id="training-game">
-              <option value="0">Ahmed Dabo vs Leonel Mbaho · Tactical awareness</option>
-              <option value="1">Ahmed Dabo · Space vs development</option>
-              <option value="2">Ahmed Dabo vs Leonel Mbaho · Positional pressure</option>
-            </select>
-          </label>
-          <label>Play as
-            <select id="training-side">
-              <option value="w">White</option>
-              <option value="b">Black</option>
-            </select>
-          </label>
-        </div>
-        <p class="training-progress" id="training-progress" aria-live="polite"></p>
-        <div class="training-board" id="training-board" role="group" aria-label="Interactive chessboard"></div>
-        <p class="training-status" id="training-status" role="status" aria-live="polite"></p>
-        <div class="training-actions">
-          <button class="ci-button ci-button-secondary" id="training-hint" type="button">Show Stockfish’s move</button>
-          <button class="ci-button ci-button-secondary" id="training-reset" type="button">Restart</button>
-          <button class="ci-button ci-button-primary" id="training-next" type="button" hidden>Next position</button>
-        </div>
-        <p class="training-note">Move suggestions use Lichess’s free cached Stockfish analysis. The position is sent to Lichess for lookup; uncached positions can’t be judged here. The result shows Lichess’s saved search depth. Engine source and GPLv3 licence: <a href="https://github.com/nmrugg/stockfish.js" target="_blank" rel="noopener noreferrer">Stockfish.js</a>.</p>
-      </div>
       <p class="ci-footnote">Study viewer provided by Lichess. RBKC Chess Community is not affiliated with Lichess.</p>
       <div class="ci-card">
         <span class="eyebrow">Explore a position</span>
@@ -140,7 +105,6 @@
     </div>
   </footer>
   <script src="chess-intelligence.js?v=player-search-20261108-3"></script>
-  <script type="module" src="chess-training.js?v=engine-20261121-9"></script>
   <script>
     (()=>{const open=document.getElementById("open-analysis-board"),close=document.getElementById("close-analysis-board");if(!open||!close)return;open.addEventListener("click",()=>document.body.classList.add("ci-analysis-expanded"));close.addEventListener("click",()=>document.body.classList.remove("ci-analysis-expanded"));document.addEventListener("keydown",e=>{if(e.key==="Escape")document.body.classList.remove("ci-analysis-expanded")})})();
   </script>
