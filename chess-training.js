@@ -43,7 +43,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     const files = userColor === "w" ? [0,1,2,3,4,5,6,7] : [7,6,5,4,3,2,1,0];
     ranks.forEach(rank => files.forEach(file => {
       const sq = String.fromCharCode(97 + file) + String(rank + 1);
-      const piece = board[rank][file];
+      const piece = board[7 - rank][file];
       const button = document.createElement("button");
       button.type = "button";
       button.className = "training-square " + ((rank + file) % 2 ? "dark" : "light");
