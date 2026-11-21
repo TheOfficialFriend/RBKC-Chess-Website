@@ -48,7 +48,12 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     if (engineReadyPromise) return engineReadyPromise;
     engineReadyPromise = new Promise((resolve, reject) => {
       const engineWasm = engineBase + "stockfish-nnue-16-single.wasm";
-      const workerCode = 'var Module=self.Module={wasmBinaryFile:"' + engineWasm + '",locateFile:function(path){return new URL(path.split("/").pop(), "' + engineBase + '").href;}};importScripts("' + engineScript + '");';
+      const workerCode = [
+        "const pending=[];let engineHandler=null;let engineReady=false;",
+        "self.onmessage=e=>pending.push(e.data);",
+        'var Module=self.Module={wasmBinary:null,locateFile:function(path){return new URL(path.split("/").pop(), "' + engineBase + '").href;},onRuntimeInitialized:function(){engineReady=true;if(engineHandler){while(pending.length)engineHandler({data:pending.shift()});}}};',
+        'fetch("' + engineWasm + '").then(response=>{if(!response.ok)throw new Error("Stockfish WASM download failed: "+response.status);return response.arrayBuffer();}).then(bytes=>{Module.wasmBinary=new Uint8Array(bytes);importScripts("' + engineScript + '");engineHandler=self.onmessage;self.onmessage=e=>{if(engineReady)engineHandler(e);else pending.push(e.data);};}).catch(error=>{throw error;});'
+      ].join("");
       const workerUrl = URL.createObjectURL(new Blob([workerCode], { type: "text/javascript" }));
       engineWorker = new Worker(workerUrl);
       let startupTimer = setTimeout(() => reject(new Error("Stockfish took too long to start.")), 20000);
