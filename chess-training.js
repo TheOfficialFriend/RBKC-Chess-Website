@@ -40,7 +40,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
   let engineReadyPromise = null;
   let enginePending = null;
   let engineBusy = false;
-  const engineBase = "https://cdn.jsdelivr.net/npm/stockfish@19.0.1/";
+  const engineBase = "https://cdn.jsdelivr.net/npm/stockfish@19.0.1/bin/";
   const engineScript = engineBase + "stockfish-19-lite-single.js";
   const engineDepth = 10;
 
@@ -62,9 +62,9 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
           if (pending) { clearTimeout(pending.timer); pending.resolve(move); }
         }
       };
-      engineWorker.onerror = () => {
+      engineWorker.onerror = event => {
         clearTimeout(startupTimer);
-        const error = new Error("Stockfish could not load in this browser.");
+        const error = new Error("Stockfish engine file failed to load" + (event?.message ? ": " + event.message : "."));
         if (enginePending) { clearTimeout(enginePending.timer); enginePending.reject(error); enginePending = null; }
         reject(error);
       };
