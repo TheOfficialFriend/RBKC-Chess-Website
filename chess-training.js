@@ -36,65 +36,24 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     statusEl.dataset.kind = kind || "info";
   }
 
-  let engineWorker = null;
-  let engineReadyPromise = null;
-  let enginePending = null;
   let engineBusy = false;
-  const engineBase = "https://cdn.jsdelivr.net/npm/stockfish.js@10.0.2/";
-  const engineScript = engineBase + "stockfish.js";
-  const engineDepth = 10;
-
-  function ensureEngine() {
-    if (engineReadyPromise) return engineReadyPromise;
-    engineReadyPromise = new Promise((resolve, reject) => {
-      const workerCode = 'const pending=[];self.onmessage=e=>pending.push(e.data);importScripts("' + engineScript + '");const engineHandler=self.onmessage;self.onmessage=e=>engineHandler(e);for(const command of pending)engineHandler({data:command});';
-      const workerUrl = URL.createObjectURL(new Blob([workerCode], { type: "text/javascript" }));
-      engineWorker = new Worker(workerUrl);
-      let startupTimer = setTimeout(() => reject(new Error("Stockfish took too long to start.")), 20000);
-      engineWorker.onmessage = event => {
-        const line = String(event.data || "").trim();
-        if (line === "uciok") { engineWorker.postMessage("isready"); return; }
-        if (line === "readyok") { clearTimeout(startupTimer); resolve(); return; }
-        if (line.startsWith("bestmove ")) {
-          const move = line.split(/\\s+/)[1];
-          const pending = enginePending;
-          enginePending = null;
-          if (pending) { clearTimeout(pending.timer); pending.resolve(move); }
-        }
-      };
-      engineWorker.onerror = event => {
-        clearTimeout(startupTimer);
-        const error = new Error("Stockfish engine file failed to load" + (event?.message ? ": " + event.message : "."));
-        if (enginePending) { clearTimeout(enginePending.timer); enginePending.reject(error); enginePending = null; }
-        reject(error);
-      };
-      engineWorker.postMessage("uci");
-    }).catch(error => {
-      if (engineWorker) engineWorker.terminate();
-      engineWorker = null;
-      engineReadyPromise = null;
-      throw error;
-    });
-    return engineReadyPromise;
-  }
+  let lastAnalysisDepth = 0;
 
   async function analyseFen(fen) {
-    await ensureEngine();
-    return new Promise((resolve, reject) => {
-      if (enginePending) { reject(new Error("The engine is still finishing its last move.")); return; }
-      enginePending = {
-        resolve,
-        reject,
-        timer: setTimeout(() => {
-          if (!enginePending) return;
-          enginePending = null;
-          reject(new Error("Stockfish analysis timed out. Try again."));
-        }, 25000)
-      };
-      engineWorker.postMessage("setoption name Threads value 1");
-      engineWorker.postMessage("position fen " + fen);
-      engineWorker.postMessage("go depth " + engineDepth);
-    });
+    const endpoint = "https://lichess.org/api/cloud-eval?fen=" + encodeURIComponent(fen) + "&multiPv=1";
+    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
+    if (response.status === 404) {
+      throw new Error("Lichess has no cached Stockfish analysis for this position yet. Try the Lichess analysis board below.");
+    }
+    if (response.status === 429) {
+      throw new Error("Lichess is limiting analysis requests right now. Please wait a little and try again.");
+    }
+    if (!response.ok) throw new Error("Could not retrieve Lichess analysis (HTTP " + response.status + ").");
+    const result = await response.json();
+    const uci = result?.pvs?.[0]?.moves?.trim()?.split(/\s+/)[0];
+    if (!uci) throw new Error("No cached Stockfish move is available for this position.");
+    lastAnalysisDepth = Number(result.depth) || 0;
+    return uci;
   }
 
   function moveFromUci(uci) {
@@ -180,7 +139,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     selected = null; targets = [];
     engineBusy = true;
     renderBoard();
-    showStatus("Stockfish is analysing this position…", "info");
+    showStatus("Looking up Lichess’s Stockfish analysis…", "info");
     try {
       const best = await bestMoveForPosition();
       if (!best) throw new Error("Stockfish did not return a legal move.");
@@ -190,7 +149,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
         const sourceNote = sourceMove && stripSan(sourceMove.san) !== stripSan(best.san)
           ? " The RBKC game played " + sourceMove.san + "."
           : "";
-        showStatus("Stockfish’s top move at depth " + engineDepth + " is " + best.san + "." + sourceNote + " Try again.", "retry");
+        showStatus("Stockfish’s top move at depth " + lastAnalysisDepth + " is " + best.san + "." + sourceNote + " Try again.", "retry");
         return;
       }
 
@@ -221,7 +180,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
         const sourceNote = sourceMove && stripSan(sourceMove.san) === stripSan(candidate.san)
           ? " It matches the move in the RBKC game."
           : sourceMove ? " The RBKC game played " + sourceMove.san + "." : "";
-        showStatus("Stockfish’s top move at depth " + engineDepth + "." + sourceNote, "success");
+        showStatus("Stockfish’s top move at depth " + lastAnalysisDepth + "." + sourceNote, "success");
         nextEl.hidden = false;
       }
     } catch (error) {
@@ -238,7 +197,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     ply = 0;
     progressEl.textContent = "Move 1 · " + (userColor === "w" ? "White" : "Black") + " to play";
     renderBoard();
-    showStatus(userColor === "w" ? "Play a move. Stockfish will check it and play the reply." : "Stockfish is preparing White’s first move…", "info");
+    showStatus(userColor === "w" ? "Play a move. Stockfish will check it and play the reply." : "Looking up Stockfish’s first move on Lichess…", "info");
     if (userColor === "b") {
       engineBusy = true;
       try {
@@ -249,7 +208,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
         progressEl.textContent = "Move 1 · Black to play";
         showStatus("Stockfish opened with " + firstMove.san + ". Your move.", "info");
       } catch (error) {
-        showStatus(error.message || "Stockfish could not load. Try again or choose White.", "retry");
+        showStatus(error.message || "Could not get a Lichess evaluation for this position. Try again or choose White.", "retry");
       } finally {
         engineBusy = false;
         renderBoard();
@@ -312,10 +271,10 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
   hintEl.addEventListener("click", async () => {
     if (engineBusy || puzzleSolved) return;
     engineBusy = true;
-    showStatus("Stockfish is analysing this position…", "info");
+    showStatus("Looking up Lichess’s Stockfish analysis…", "info");
     try {
       const best = await bestMoveForPosition();
-      if (best) showStatus("Stockfish’s top move at depth " + engineDepth + " is " + best.san + ".", "success");
+      if (best) showStatus("Stockfish’s top move at depth " + lastAnalysisDepth + " is " + best.san + ".", "success");
       else showStatus("Stockfish found no legal move.", "retry");
     } catch (error) {
       showStatus(error.message || "Stockfish could not analyse this position.", "retry");
