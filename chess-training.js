@@ -47,7 +47,8 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
   function ensureEngine() {
     if (engineReadyPromise) return engineReadyPromise;
     engineReadyPromise = new Promise((resolve, reject) => {
-      const workerCode = 'self.Module={locateFile:function(path){return "' + engineBase + '" + path.split("/").pop();}};importScripts("' + engineScript + '");';
+      const engineWasm = engineBase + "stockfish-nnue-16-single.wasm";
+      const workerCode = 'var Module=self.Module={wasmBinaryFile:"' + engineWasm + '",locateFile:function(path){return new URL(path.split("/").pop(), "' + engineBase + '").href;}};importScripts("' + engineScript + '");';
       const workerUrl = URL.createObjectURL(new Blob([workerCode], { type: "text/javascript" }));
       engineWorker = new Worker(workerUrl);
       let startupTimer = setTimeout(() => reject(new Error("Stockfish took too long to start.")), 20000);
