@@ -40,8 +40,8 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
   let engineReadyPromise = null;
   let enginePending = null;
   let engineBusy = false;
-  const engineBase = "https://cdn.jsdelivr.net/npm/stockfish@10.0.2/src/";
-  const engineScript = engineBase + "stockfish.asm.js";
+  const engineBase = "https://cdn.jsdelivr.net/npm/stockfish.js@10.0.2/";
+  const engineScript = engineBase + "stockfish.js";
   const engineDepth = 10;
 
   function ensureEngine() {
