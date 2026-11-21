@@ -297,8 +297,8 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     activeGame = games[Number(gameEl.value)] || games[0];
     mode = modeEl.value;
     userColor = sideEl.value;
-    if (mode === "opening") startOpening();
-    else startMiddlegame();
+    if (mode === "opening") return startOpening();
+    startMiddlegame();
   }
 
   modeEl.addEventListener("change", start);
@@ -309,9 +309,19 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     puzzleIndex = (puzzleIndex + 1) % puzzleList.length;
     loadPuzzle();
   });
-  hintEl.addEventListener("click", () => {
-    const answer = expectedMove();
-    if (answer) showStatus("Hint: " + answer.san, "retry");
+  hintEl.addEventListener("click", async () => {
+    if (engineBusy || puzzleSolved) return;
+    engineBusy = true;
+    showStatus("Stockfish is analysing this position…", "info");
+    try {
+      const best = await bestMoveForPosition();
+      if (best) showStatus("Stockfish’s top move at depth " + engineDepth + " is " + best.san + ".", "success");
+      else showStatus("Stockfish found no legal move.", "retry");
+    } catch (error) {
+      showStatus(error.message || "Stockfish could not analyse this position.", "retry");
+    } finally {
+      engineBusy = false;
+    }
   });
   start();
 })();
