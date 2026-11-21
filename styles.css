@@ -142,3 +142,17 @@ footer{background:var(--navy);color:rgba(255,255,255,.8);padding:50px 0 24px}
 }
 
 .founder-ph{width:46px;height:46px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;border:2px solid rgba(28,47,74,.15)}
+
+/* Accessible photo viewer for venue and gallery images */
+.venues .vfeatured .img,.venues .vcard .img,.gph{cursor:zoom-in}
+.venues .vfeatured .img:focus-visible,.venues .vcard .img:focus-visible,.gph:focus-visible{outline:4px solid var(--gold);outline-offset:3px}
+.image-viewer{width:min(94vw,960px);max-width:94vw;max-height:92vh;margin:auto;padding:18px;border:0;border-radius:16px;background:#fff;color:#1e293b;box-shadow:0 18px 60px #0005}
+.image-viewer[open]{display:block}
+.image-viewer::backdrop{background:rgba(12,23,39,.82)}
+.image-viewer-close{display:block;margin:0 0 10px auto;padding:8px 14px;border:0;border-radius:8px;background:var(--navy);color:#fff;font:600 14px Inter,sans-serif;cursor:pointer}
+.image-viewer figure{display:grid;gap:12px;margin:0}
+.image-viewer figure img{display:block;width:100%;height:min(70vh,760px);object-fit:contain;background:#f1f5f9;border-radius:8px}
+.image-viewer figcaption{display:grid;gap:4px;padding:0 2px}
+.image-viewer figcaption strong{font:700 18px 'Playfair Display',serif;color:var(--navy)}
+.image-viewer figcaption span{color:#475569;font-size:15px;line-height:1.5}
+@media(max-width:600px){.image-viewer{width:96vw;max-width:96vw;padding:12px}.image-viewer figure img{height:min(64vh,560px)}.image-viewer figcaption strong{font-size:17px}}
