@@ -36,6 +36,86 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     statusEl.dataset.kind = kind || "info";
   }
 
+  let engineWorker = null;
+  let engineReadyPromise = null;
+  let enginePending = null;
+  let engineBusy = false;
+  const engineBase = "https://cdn.jsdelivr.net/npm/stockfish@19.0.1/";
+  const engineScript = engineBase + "stockfish-19-lite-single.js";
+  const engineDepth = 10;
+
+  function ensureEngine() {
+    if (engineReadyPromise) return engineReadyPromise;
+    engineReadyPromise = new Promise((resolve, reject) => {
+      const workerCode = 'self.Module={locateFile:function(path){return "' + engineBase + '" + path.split("/").pop();}};importScripts("' + engineScript + '");';
+      const workerUrl = URL.createObjectURL(new Blob([workerCode], { type: "text/javascript" }));
+      engineWorker = new Worker(workerUrl);
+      let startupTimer = setTimeout(() => reject(new Error("Stockfish took too long to start.")), 20000);
+      engineWorker.onmessage = event => {
+        const line = String(event.data || "").trim();
+        if (line === "uciok") { engineWorker.postMessage("isready"); return; }
+        if (line === "readyok") { clearTimeout(startupTimer); resolve(); return; }
+        if (line.startsWith("bestmove ")) {
+          const move = line.split(/\\s+/)[1];
+          const pending = enginePending;
+          enginePending = null;
+          if (pending) { clearTimeout(pending.timer); pending.resolve(move); }
+        }
+      };
+      engineWorker.onerror = () => {
+        clearTimeout(startupTimer);
+        const error = new Error("Stockfish could not load in this browser.");
+        if (enginePending) { clearTimeout(enginePending.timer); enginePending.reject(error); enginePending = null; }
+        reject(error);
+      };
+      engineWorker.postMessage("uci");
+    }).catch(error => {
+      if (engineWorker) engineWorker.terminate();
+      engineWorker = null;
+      engineReadyPromise = null;
+      throw error;
+    });
+    return engineReadyPromise;
+  }
+
+  async function analyseFen(fen) {
+    await ensureEngine();
+    return new Promise((resolve, reject) => {
+      if (enginePending) { reject(new Error("The engine is still finishing its last move.")); return; }
+      enginePending = {
+        resolve,
+        reject,
+        timer: setTimeout(() => {
+          if (!enginePending) return;
+          enginePending = null;
+          reject(new Error("Stockfish analysis timed out. Try again."));
+        }, 25000)
+      };
+      engineWorker.postMessage("setoption name Threads value 1");
+      engineWorker.postMessage("position fen " + fen);
+      engineWorker.postMessage("go depth " + engineDepth);
+    });
+  }
+
+  function moveFromUci(uci) {
+    if (!uci || uci === "(none)" || uci === "0000") return null;
+    return chess.moves({ verbose: true }).find(move =>
+      move.from === uci.slice(0, 2) &&
+      move.to === uci.slice(2, 4) &&
+      (move.promotion || "") === (uci[4] || "")
+    ) || null;
+  }
+
+  async function bestMoveForPosition() {
+    return moveFromUci(await analyseFen(chess.fen()));
+  }
+
+  function moveObject(move) {
+    return move.promotion
+      ? { from: move.from, to: move.to, promotion: move.promotion }
+      : { from: move.from, to: move.to };
+  }
+
   function renderBoard() {
     boardEl.replaceChildren();
     const board = chess.board();
@@ -61,18 +141,17 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     }));
   }
 
-  function expectedMove() {
+  function recordedMove() {
     if (mode === "opening") {
       const san = activeGame.moves[ply];
-      if (!san) return null;
-      const options = chess.moves({ verbose: true });
-      return options.find(move => stripSan(move.san) === stripSan(san)) || null;
+      return san ? { san } : null;
     }
-    return puzzleList[puzzleIndex]?.move || null;
+    const puzzle = puzzleList[puzzleIndex];
+    return puzzle ? { san: puzzle.san, move: puzzle.move } : null;
   }
 
-  function onSquare(square) {
-    if (puzzleSolved || (mode === "opening" && chess.turn() !== userColor)) return;
+  async function onSquare(square) {
+    if (puzzleSolved || engineBusy || (mode === "opening" && chess.turn() !== userColor)) return;
     const piece = chess.get(square);
     if (!selected) {
       if (!piece || piece.color !== chess.turn()) return;
@@ -95,47 +174,87 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
       renderBoard();
       return;
     }
-    const answer = expectedMove();
-    const isCorrect = answer && candidate.from === answer.from && candidate.to === answer.to && (candidate.promotion || "") === (answer.promotion || "");
-    if (!isCorrect) {
-      mistakes++;
-      selected = null; targets = [];
-      renderBoard();
-      showStatus(mistakes >= 2 && answer ? "Not quite. Hint: " + answer.san : "Not that move. Try again.", "retry");
-      return;
-    }
-    chess.move(candidate.promotion ? { from: candidate.from, to: candidate.to, promotion: candidate.promotion } : { from: candidate.from, to: candidate.to });
+
+    const sourceMove = recordedMove();
+    const beforeFen = chess.fen();
     selected = null; targets = [];
-    if (mode === "opening") {
-      ply++;
-      while (ply < 24 && ply < activeGame.moves.length && chess.turn() !== userColor) {
-        chess.move(activeGame.moves[ply]);
-        ply++;
+    engineBusy = true;
+    renderBoard();
+    showStatus("Stockfish is analysing this position…", "info");
+    try {
+      const best = await bestMoveForPosition();
+      if (!best) throw new Error("Stockfish did not return a legal move.");
+      const isTopMove = candidate.from === best.from && candidate.to === best.to && (candidate.promotion || "") === (best.promotion || "");
+      if (!isTopMove) {
+        mistakes++;
+        const sourceNote = sourceMove && stripSan(sourceMove.san) !== stripSan(best.san)
+          ? " The RBKC game played " + sourceMove.san + "."
+          : "";
+        showStatus("Stockfish’s top move at depth " + engineDepth + " is " + best.san + "." + sourceNote + " Try again.", "retry");
+        return;
       }
+
+      chess.load(beforeFen);
+      chess.move(moveObject(candidate));
+      if (mode === "opening") {
+        ply++;
+        let replyNote = "";
+        if (ply < 24 && chess.turn() !== userColor) {
+          showStatus("Top move. Stockfish is preparing the reply…", "info");
+          const reply = await bestMoveForPosition();
+          if (reply) {
+            chess.move(moveObject(reply));
+            ply++;
+            replyNote = " Stockfish replied " + reply.san + ".";
+          }
+        }
+        const completed = ply >= 24;
+        progressEl.textContent = completed ? "12-move opening practice complete" : "Move " + (Math.floor(ply / 2) + 1) + " · " + (userColor === "w" ? "White" : "Black") + " to play";
+        const sourceNote = sourceMove && stripSan(sourceMove.san) === stripSan(candidate.san)
+          ? " This also matches the RBKC game."
+          : sourceMove ? " The RBKC game played " + sourceMove.san + "." : "";
+        showStatus(completed ? "Stockfish’s top move. Opening practice complete." + sourceNote : "Stockfish’s top move." + sourceNote + replyNote, "success");
+        if (completed) puzzleSolved = true;
+      } else {
+        puzzleSolved = true;
+        progressEl.textContent = "Middlegame position " + (puzzleIndex + 1) + " of " + puzzleList.length;
+        const sourceNote = sourceMove && stripSan(sourceMove.san) === stripSan(candidate.san)
+          ? " It matches the move in the RBKC game."
+          : sourceMove ? " The RBKC game played " + sourceMove.san + "." : "";
+        showStatus("Stockfish’s top move at depth " + engineDepth + "." + sourceNote, "success");
+        nextEl.hidden = false;
+      }
+    } catch (error) {
+      showStatus(error.message || "Stockfish could not analyse this position. Please try again.", "retry");
+    } finally {
+      engineBusy = false;
       renderBoard();
-      const completed = ply >= 24 || ply >= activeGame.moves.length;
-      progressEl.textContent = completed ? "Opening line complete" : "Move " + (Math.floor(ply / 2) + 1) + " · " + (userColor === "w" ? "White" : "Black") + " to play";
-      showStatus(completed ? "Line complete. Reset to practise it again." : "Correct. Your move.", completed ? "success" : "success");
-      if (completed) puzzleSolved = true;
-    } else {
-      puzzleSolved = true;
-      renderBoard();
-      progressEl.textContent = "Middlegame position " + (puzzleIndex + 1) + " of " + puzzleList.length;
-      showStatus("Correct — " + answer.san + " was played in the game.", "success");
-      nextEl.hidden = false;
     }
   }
 
-  function startOpening() {
+  async function startOpening() {
     chess = new Chess();
     selected = null; targets = []; mistakes = 0; puzzleSolved = false; nextEl.hidden = true;
-    if (userColor === "b" && activeGame.moves.length) {
-      chess.move(activeGame.moves[0]);
-      ply = 1;
-    } else ply = 0;
+    ply = 0;
     progressEl.textContent = "Move 1 · " + (userColor === "w" ? "White" : "Black") + " to play";
     renderBoard();
-    showStatus("Play the moves from the game. The opponent’s replies will appear automatically.", "info");
+    showStatus(userColor === "w" ? "Play a move. Stockfish will check it and play the reply." : "Stockfish is preparing White’s first move…", "info");
+    if (userColor === "b") {
+      engineBusy = true;
+      try {
+        const firstMove = await bestMoveForPosition();
+        if (!firstMove) throw new Error("Stockfish did not return a legal move.");
+        chess.move(moveObject(firstMove));
+        ply = 1;
+        progressEl.textContent = "Move 1 · Black to play";
+        showStatus("Stockfish opened with " + firstMove.san + ". Your move.", "info");
+      } catch (error) {
+        showStatus(error.message || "Stockfish could not load. Try again or choose White.", "retry");
+      } finally {
+        engineBusy = false;
+        renderBoard();
+      }
+    }
   }
 
   function makePuzzles() {
@@ -171,7 +290,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
     selected = null; targets = []; mistakes = 0; puzzleSolved = false; nextEl.hidden = true; hintEl.hidden = true;
     renderBoard();
     progressEl.textContent = "Move " + puzzle.number + " · " + (userColor === "w" ? "White" : "Black") + " to play";
-    showStatus("Find the move played in the RBKC game.", "info");
+    showStatus("Find Stockfish’s top move in this position.", "info");
   }
 
   function start() {
