@@ -40,7 +40,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
   let engineReadyPromise = null;
   let enginePending = null;
   let engineBusy = false;
-  const engineBase = "https://cdn.jsdelivr.net/npm/stockfish@19.0.1/bin/";
+  const engineBase = "https://cdn.jsdelivr.net/npm/stockfish@19.0.0/bin/";
   const engineScript = engineBase + "stockfish-19-lite-single.js";
   const engineDepth = 10;
 
