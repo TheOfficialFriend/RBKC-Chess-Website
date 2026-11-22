@@ -84,6 +84,78 @@
   ]
 }
 </script>
+<style>
+:root {
+  --navy: #173b2a;
+  --navy-2: #244a35;
+  --gold: #bd974b;
+  --gold-2: #e2c377;
+  --bg: #fbf4e4;
+  --card: #fffbf0;
+  --muted: #4e5b4c;
+  --border: #dfd0ad;
+}
+body { color: #23382a; }
+nav { background: #fbf4e4; }
+.tab { color: var(--navy); }
+.tab:not(.active):hover { background: #efe3c8; }
+:where(a, button):focus-visible { outline: 2px solid #906a25; outline-offset: 4px; }
+#home .poster-hero {
+  max-width: 1140px;
+  margin: clamp(16px, 4vw, 46px) auto;
+  padding: clamp(14px, 3vw, 32px);
+  border: 1px solid var(--gold);
+  background: var(--card);
+}
+.poster-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(22px, 5vw, 70px);
+  align-items: center;
+  border: 1px solid var(--navy);
+  padding: clamp(16px, 4vw, 56px);
+}
+.poster-masthead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--navy);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.poster-masthead img { width: 64px; height: 64px; border-radius: 50%; }
+.poster-copy h1 {
+  margin: 22px 0 18px;
+  color: var(--navy);
+  font-size: clamp(2.35rem, 5.5vw, 5.3rem);
+  line-height: 1.03;
+  letter-spacing: -.04em;
+  text-wrap: balance;
+}
+.poster-copy p { max-width: 36ch; }
+.poster-copy .poster-details { margin: 24px 0; padding-top: 15px; border-top: 1px solid var(--gold); }
+.poster-details strong { display: block; color: var(--navy); }
+.poster-copy .btn-gold { background: var(--navy); color: #fffaf0; font-family: inherit; }
+.poster-copy .btn-gold:hover { background: var(--navy-2); }
+.poster-copy .btn-outline-light { border-color: var(--navy); color: var(--navy); }
+.poster-copy .btn-outline-light:hover { background: #efe3c8; }
+.poster-copy .poster-tool { display: inline-block; margin-top: 15px; text-decoration: underline; text-underline-offset: .2em; }
+.poster-photo { margin: 0; }
+.poster-photo img { width: 100%; height: auto; border: 1px solid var(--navy); }
+.poster-photo figcaption { padding-top: 8px; color: var(--muted); font-size: .78rem; }
+#home .venues { background: #f3e9d4; }
+#home .venues h2 { color: var(--navy); }
+#home .cta { background: var(--navy); padding-inline: 20px; }
+@media (max-width: 1180px) {
+  #home .poster-hero { margin-inline: clamp(10px, 3vw, 32px); }
+}
+@media (max-width: 700px) {
+  .poster-sheet { grid-template-columns: minmax(0, 1fr); }
+  .poster-photo { max-width: 440px; }
+}
+</style>
 </head>
 <body>
 
@@ -105,18 +177,29 @@
 
 <!-- HOME -->
 <div class="view active" id="home">
-  <section class="hero">
-    <img class="bg" src="images/hero.jpg" alt="RBKC Chess Community players at a past venue">
-    <div class="scrim"></div>
-    <div class="container hero-inner">
-      <span class="badge">Est. 2024 · RBKC</span>
-      <h1>Chess for<em>Everyone</em>in Kensington & Chelsea</h1>
-      <p>Join London's most inclusive chess community. Attend club sessions on Lillie Road in West Brompton, opposite Hotel Lily and be part of a growing movement across RBKC.</p>
-      <div class="btnrow">
-        <span class="btn btn-gold" onclick="showView('events')">View Events →</span>
-        <a class="btn btn-outline-light" href="chess-intelligence.html">Chess Intelligence</a>
-        <a class="btn btn-outline-light" href="https://t.me/OFF4London" target="_blank" rel="noopener noreferrer">Join the Community on Telegram →</a>
+  <section class="poster-hero" aria-labelledby="home-title">
+    <div class="poster-sheet">
+      <div class="poster-copy">
+        <div class="poster-masthead">
+          <img src="images/logo.jpg" alt="" width="64" height="64">
+          <span>RBKC Chess Community</span>
+        </div>
+        <h1 id="home-title">Chess for everyone</h1>
+        <p>Come play free, friendly chess in West Brompton. All ages and levels are welcome.</p>
+        <p class="poster-details">
+          <strong>Tuesdays, 6–8 pm</strong>
+          Lillie Road, opposite Hotel Lily
+        </p>
+        <div class="btnrow">
+          <button class="btn btn-gold" type="button" onclick="showView('events')">Join a session <span aria-hidden="true">→</span></button>
+          <a class="btn btn-outline-light" href="https://t.me/OFF4London" target="_blank" rel="noopener noreferrer">Join on Telegram</a>
+        </div>
+        <a class="poster-tool" href="chess-intelligence.html">Chess Intelligence</a>
       </div>
+      <figure class="poster-photo">
+        <img src="images/casual-game.jpg" alt="Two RBKC Chess Community members playing across a chessboard" width="900" height="1200" fetchpriority="high">
+        <figcaption>A game at an earlier RBKC Chess Community session</figcaption>
+      </figure>
     </div>
   </section>
 
