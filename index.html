@@ -145,6 +145,9 @@ nav { background: #fbf4e4; }
 .poster-photo { margin: 0; }
 .poster-photo img { width: 100%; height: auto; border: 1px solid var(--navy); }
 .poster-photo figcaption { padding-top: 8px; color: var(--muted); font-size: .78rem; }
+.view-return { padding-block: 12px; }
+.view-return .btn { min-height: 44px; background: var(--navy); color: #fff; font-family: inherit; }
+.view-return .btn:hover { background: var(--navy-2); }
 #home .venues { background: #f3e9d4; }
 #home .venues h2 { color: var(--navy); }
 #home .cta { background: var(--navy); padding-inline: 20px; }
@@ -184,7 +187,7 @@ nav { background: #fbf4e4; }
           <img src="images/logo.jpg" alt="" width="64" height="64">
           <span>RBKC Chess Community</span>
         </div>
-        <h1 id="home-title">Chess for everyone</h1>
+        <h1 id="home-title" tabindex="-1">Chess for everyone</h1>
         <p>Come play free, friendly chess in West Brompton. All ages and levels are welcome.</p>
         <p class="poster-details">
           <strong>Tuesdays, 6–8 pm</strong>
@@ -266,6 +269,9 @@ nav { background: #fbf4e4; }
 
 <!-- EVENTS -->
 <div class="view" id="events">
+  <div class="container view-return">
+    <button class="btn" type="button" onclick="showView('home'); document.getElementById('home-title').focus({preventScroll:true})"><span aria-hidden="true">←</span> Back to home</button>
+  </div>
   <section class="hero" style="min-height:280px"><div class="scrim" style="background:linear-gradient(135deg,#233c5e,#2f4569)"></div>
     <div class="container hero-inner" style="max-width:100%;text-align:center;padding:60px 0">
       <span class="badge">Calendar</span>
@@ -284,6 +290,9 @@ nav { background: #fbf4e4; }
 
 <!-- GALLERY -->
 <div class="view" id="gallery">
+  <div class="container view-return">
+    <button class="btn" type="button" onclick="showView('home'); document.getElementById('home-title').focus({preventScroll:true})"><span aria-hidden="true">←</span> Back to home</button>
+  </div>
   <section class="hero" style="min-height:260px"><div class="scrim" style="background:linear-gradient(135deg,#233c5e,#2f4569)"></div>
     <div class="container hero-inner" style="max-width:100%;text-align:center;padding:55px 0">
       <span class="badge">Gallery</span>
